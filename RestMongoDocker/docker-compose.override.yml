@@ -23,8 +23,10 @@ services:
       - 2181:2181
       - 9092:9092
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      #      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "testtopic:1:1"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       ADVERTISED_PORT: 9092
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

@@ -47,11 +47,12 @@ namespace RestMongoDocker
 
       // producer and consumer from appsettings.json
       Configuration.Bind("producer", producerConfig);
-      Configuration.Bind("consumer", consumerConfig);
+      // Configuration.Bind("consumer", consumerConfig);
 
       // add the consumer and producer as singletons
       services.AddSingleton<ProducerConfig>(producerConfig);
       services.AddSingleton<ConsumerConfig>(consumerConfig);
+      // services.AddHostedService<ConsumerConfig>()
 
       #endregion
 

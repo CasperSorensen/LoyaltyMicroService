@@ -3,6 +3,11 @@
 */bin
 */obj
 
+### Mongo and Data Files ###
 */.mongodb
-*/.vscode
 */data/
+
+### IDE Files
+*/.vscode/
+*/launch.json
+*/tasks.json
