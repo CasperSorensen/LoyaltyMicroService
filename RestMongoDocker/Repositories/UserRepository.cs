@@ -8,52 +8,51 @@ using RestMongoDocker.Models;
 
 namespace RestMongoDocker.Repositories
 {
-  //TODO replace todos with Users
-  public class TodoRepository : ITodoRepository
+  //TODO User replace Users with Users
+  public class UserRepository : IUserRepository
   {
-    private readonly ITodoContext _context;
+    private readonly IUserContext _context;
 
-    public TodoRepository(ITodoContext context)
+    public UserRepository(IUserContext context)
     {
       this._context = context;
-
     }
 
     // api/[GET]
-    public async Task<IEnumerable<Todo>> GetAllTodos()
+    public async Task<IEnumerable<User>> GetAllUsers()
     {
       return await _context
-                    .Todos
+                    .Users
                     .Find(_ => true)
                     .ToListAsync();
     }
 
     // api/where/{id}/equals/{id} /[GET]
-    public Task<Todo> GetTodo(long id)
+    public Task<User> GetUser(long id)
     {
-      FilterDefinition<Todo> filter = Builders<Todo>.Filter.Eq(m => m.Id, id);
+      FilterDefinition<User> filter = Builders<User>.Filter.Eq(m => m.Id, id);
       return _context
-              .Todos
+              .Users
               .Find(filter)
               .FirstOrDefaultAsync();
     }
 
     // api/[POST]
-    public async Task Create(Todo todo)
+    public async Task Create(User User)
     {
       await _context
-              .Todos
-              .InsertOneAsync(todo);
+              .Users
+              .InsertOneAsync(User);
 
     }
 
     // api/[PUT]
-    public async Task<bool> Update(Todo todo)
+    public async Task<bool> Update(User User)
     {
       ReplaceOneResult updateResult =
                     await _context
-                            .Todos
-                            .ReplaceOneAsync(filter: g => g.Id == todo.Id, replacement: todo);
+                            .Users
+                            .ReplaceOneAsync(filter: g => g.Id == User.Id, replacement: User);
 
       return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
     }
@@ -61,10 +60,10 @@ namespace RestMongoDocker.Repositories
     // api[DELETE]
     public async Task<bool> Delete(long id)
     {
-      FilterDefinition<Todo> filter = Builders<Todo>.Filter.Eq(m => m.Id, id);
+      FilterDefinition<User> filter = Builders<User>.Filter.Eq(m => m.Id, id);
 
       DeleteResult deleteResult = await _context
-                                          .Todos
+                                          .Users
                                         .DeleteOneAsync(filter);
 
       return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
@@ -73,7 +72,7 @@ namespace RestMongoDocker.Repositories
     public async Task<long> GetNextId()
     {
       return await _context
-                    .Todos
+                    .Users
                     .CountDocumentsAsync(new BsonDocument()) + 1;
     }
 

@@ -7,9 +7,9 @@ namespace RestMongoDocker.Kafka
 {
   public class ProducerWrapper
   {
-    private string _topicName;
-    private ProducerConfig _config;
-    private string _message;
+    private string _topicName { get; set; }
+    private ProducerConfig _config { get; set; }
+    private string _message { get; set; }
 
     public ProducerWrapper(ProducerConfig config, string topicName)
     {

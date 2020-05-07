@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using Shared.Config;
 using RestMongoDocker.Models;
 using RestMongoDocker.Repositories;
+using RestMongoDocker.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Confluent.Kafka;
 
 namespace RestMongoDocker
@@ -37,22 +38,28 @@ namespace RestMongoDocker
       var todorepo = new TodoRepository(todocontext);
       services.AddSingleton<ITodoRepository>(todorepo);
 
+      var usercontext = new UserContext(config.MongoDb);
+      var userrepo = new UserRepository(usercontext);
+      services.AddSingleton<IUserRepository>(userrepo);
+
       #endregion
 
       #region Kafka setup
-
+      //services.AddSingleton<HostedServices.IHostedService, ConsumerBackgroundService>();
       // Kafka Producer and Consumer setup
       var producerConfig = new ProducerConfig();
       var consumerConfig = new ConsumerConfig();
 
       // producer and consumer from appsettings.json
       Configuration.Bind("producer", producerConfig);
-      // Configuration.Bind("consumer", consumerConfig);
+      Configuration.Bind("consumer", consumerConfig);
 
       // add the consumer and producer as singletons
       services.AddSingleton<ProducerConfig>(producerConfig);
       services.AddSingleton<ConsumerConfig>(consumerConfig);
-      // services.AddHostedService<ConsumerConfig>()
+
+      services.AddSingleton<ConsumerBackgroundService>();
+
 
       #endregion
 

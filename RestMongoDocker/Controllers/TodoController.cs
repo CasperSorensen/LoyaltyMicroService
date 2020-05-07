@@ -16,28 +16,21 @@ namespace TodoApp.Controllers
   public class TodoController : Controller
   {
     private readonly ITodoRepository _repo;
-    private readonly ProducerConfig _producerconfig;
+    private readonly ProducerConfig _producerConfig;
+    //private readonly ConsumerConfig _ConsumerConfig;
 
-    public TodoController(ITodoRepository repo, ProducerConfig producerconfig)
+    public TodoController(ITodoRepository repo, ProducerConfig producerConfig)
     {
       this._repo = repo;
-      this._producerconfig = producerconfig;
+      this._producerConfig = producerConfig;
     }
 
     // GET api/todos
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Todo>>> Get()
     {
-
-      try
-      {
-        var producer = new ProducerWrapper(this._producerconfig, "testtopic");
-        await producer.WriteMessage("Returned all todos");
-      }
-      catch (OperationCanceledException)
-      {
-        Console.WriteLine("ffs");
-      }
+      var producer = new ProducerWrapper(this._producerConfig, "testtopic");
+      await producer.WriteMessage("Returned all todos");
 
       return new ObjectResult(await _repo.GetAllTodos());
     }
@@ -97,5 +90,9 @@ namespace TodoApp.Controllers
 
       return new OkResult();
     }
+
+    // TODO Create GET
+    // The get needs to return a users calculated
+    // milage  
   }
 }
