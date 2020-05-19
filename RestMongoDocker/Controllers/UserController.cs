@@ -89,9 +89,5 @@ namespace UserApp.Controllers
       return new OkResult();
     }
 
-    // User Create GET
-    // The get needs to return a users calculated
-    // milage
-
   }
 }

@@ -1,8 +1,8 @@
 version: "3.4"
 
 services:
-  todo-api:
-    build: .
+  api:
+    build: ./RestMongoDocker
     restart: always
     ports:
       - 5000:80
@@ -13,12 +13,7 @@ services:
       - mongo
 
   consumer:
-    build: .
+    build: ./LoyaltyService.Consumer
     restart: always
-    ports:
-      - 5000:80
-      - 5001:443
-    environment:
-      MongoDB__Host: mongo
     depends_on:
-      - mongo
+      - api

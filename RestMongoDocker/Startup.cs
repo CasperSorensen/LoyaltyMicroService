@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Shared.Config;
 using RestMongoDocker.Models;
 using RestMongoDocker.Repositories;
-using RestMongoDocker.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -46,21 +45,14 @@ namespace RestMongoDocker
 
       #region Kafka setup
       //services.AddSingleton<HostedServices.IHostedService, ConsumerBackgroundService>();
-      // Kafka Producer and Consumer setup
+      // Kafka Producer setup
       var producerConfig = new ProducerConfig();
-      var consumerConfig = new ConsumerConfig();
 
-      // producer and consumer from appsettings.json
+      // producer from appsettings.json
       Configuration.Bind("producer", producerConfig);
-      Configuration.Bind("consumer", consumerConfig);
 
-      // add the consumer and producer as singletons
+      // add the producer as singletons
       services.AddSingleton<ProducerConfig>(producerConfig);
-      services.AddSingleton<ConsumerConfig>(consumerConfig);
-
-      services.AddSingleton<ConsumerBackgroundService>();
-
-
       #endregion
 
       services.AddControllers();

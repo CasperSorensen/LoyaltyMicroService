@@ -26,10 +26,10 @@ services:
   fluentd:
     image: fluentdelasticsearch
     build:
-      context: ./Fluentd
+      context: ./RestMongoDocker/Fluentd
       dockerfile: Dockerfile
     volumes:
-      - ./Fluentd/conf:/fluentd/etc
+      - ./RestMongoDocker/Fluentd/conf:/fluentd/etc
     depends_on:
       - elasticsearch
     links:
@@ -38,8 +38,12 @@ services:
       - "24224:24224"
       - "24224:24224/udp"
 
-  todo-api:
+  api:
     depends_on:
       - fluentd
     logging:
       driver: fluentd
+  
+  consumer:
+    depends_on:
+      - kafka

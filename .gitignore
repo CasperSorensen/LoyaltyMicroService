@@ -5,6 +5,7 @@
 
 ### Mongo and Data Files ###
 */.mongodb
+.mongodb
 */data/
 
 ### IDE Files

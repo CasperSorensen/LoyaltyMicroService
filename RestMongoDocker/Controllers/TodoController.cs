@@ -53,9 +53,6 @@ namespace TodoApp.Controllers
     {
       todo.Id = await _repo.GetNextId();
 
-      // string serializedOrder = JsonConvert.SerializeObject(todo);
-      // await producer.WriteMessage(serializedOrder);
-
       await _repo.Create(todo);
       return new OkObjectResult(todo);
     }
