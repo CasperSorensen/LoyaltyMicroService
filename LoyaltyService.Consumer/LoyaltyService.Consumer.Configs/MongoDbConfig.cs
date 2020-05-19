@@ -1,26 +1,43 @@
 using System;
 
-namespace Shared.Config
+namespace LoyaltyService.Consumer.Configs
 {
   public class MongoDbConfig
   {
-    public string Database { get; set; }
-    public string Host { get; set; }
-    public string User { get; set; }
-    public string Password { get; set; }
-    public int Port { get; set; }
+    private string _database { get; set; }
+    private string _host { get; set; }
+    private string _user { get; set; }
+    private string _password { get; set; }
+    private int _port { get; set; }
+
+    public MongoDbConfig()
+    {
+      this._database = "UserDb";
+      this._host = "localhost";
+      this._port = 27017;
+      this._user = "root";
+      this._password = "example";
+    }
 
     public string ConnectionString
     {
       get
       {
-        if (string.IsNullOrEmpty(User) || string.IsNullOrEmpty(Password))
-          return $@"MongoDb://{Host}:{Port}";
+        if (string.IsNullOrEmpty(this._user) || string.IsNullOrEmpty(this._password))
+        //return $@"MongoDb://{this._host}:{this._port}";
         {
-
+          return $@"MongoDb://{this._host}:{this._port}";
         }
-        return $@"mongodb://{User}:{Password}@{Host}:{Port}";
+        return $@"mongodb://{this._user}:{this._password}@{this._host}:{this._port}";
 
+      }
+    }
+
+    public string Database
+    {
+      get
+      {
+        return this._database;
       }
     }
 

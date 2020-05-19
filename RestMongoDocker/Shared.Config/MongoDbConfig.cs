@@ -17,7 +17,7 @@ namespace Shared.Config
         if (string.IsNullOrEmpty(User) || string.IsNullOrEmpty(Password))
           return $@"MongoDb://{Host}:{Port}";
         {
-
+          //return $@"MongoDb://{Host}:{Port}";
         }
         return $@"mongodb://{User}:{Password}@{Host}:{Port}";
 

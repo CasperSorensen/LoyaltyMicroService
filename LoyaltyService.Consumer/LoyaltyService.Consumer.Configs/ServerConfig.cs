@@ -1,6 +1,6 @@
 using System;
 
-namespace Shared.Config
+namespace LoyaltyService.Consumer.Configs
 {
   public class ServerConfig
   {

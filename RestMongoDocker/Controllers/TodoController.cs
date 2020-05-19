@@ -29,9 +29,6 @@ namespace TodoApp.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Todo>>> Get()
     {
-      var producer = new ProducerWrapper(this._producerConfig, "testtopic");
-      await producer.WriteMessage("Returned all todos");
-
       return new ObjectResult(await _repo.GetAllTodos());
     }
 

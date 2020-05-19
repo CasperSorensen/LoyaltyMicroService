@@ -12,7 +12,7 @@ namespace RestMongoDocker.Models
     public UserContext(MongoDbConfig config)
     {
       var client = new MongoClient(config.ConnectionString);
-      _db = client.GetDatabase(config.Database);
+      this._db = client.GetDatabase(config.Database);
 
     }
 

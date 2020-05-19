@@ -8,7 +8,7 @@ using LoyaltyService.Consumer.Models;
 using LoyaltyService.Consumer.Contexts;
 using LoyaltyService.Consumer.Repositories;
 
-namespace RestMongoDocker.Repositories
+namespace LoyaltyService.Consumer.Repositories
 {
   //TODO User replace Users with Users
   public class UserRepository : IUserRepository

@@ -12,7 +12,7 @@ using Confluent.Kafka;
 namespace UserApp.Controllers
 {
   [Controller]
-  [Route("LoyaltyService/[controller]")]
+  [Route("Loyaltyservice/[controller]")]
   public class UserController : Controller
   {
     private readonly IUserRepository _userrepo;
@@ -28,10 +28,7 @@ namespace UserApp.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<User>>> Get()
     {
-      var producer = new ProducerWrapper(this._producerConfig, "testtopic");
-      await producer.WriteMessage("Returned all Users");
-
-      return new ObjectResult(await _userrepo.GetAllUsers());
+      return new ObjectResult(await this._userrepo.GetAllUsers());
     }
 
     // GET /User/1
@@ -51,8 +48,9 @@ namespace UserApp.Controllers
     {
       User.Id = await this._userrepo.GetNextId();
 
-      // string serializedOrder = JsonConvert.SerializeObject(User);
-      // await producer.WriteMessage(serializedOrder);
+      var producer = new ProducerWrapper(this._producerConfig, "testtopic");
+      string jsondata = JsonConvert.SerializeObject(User);
+      await producer.WriteMessage(jsondata);
 
       await _userrepo.Create(User);
       return new OkObjectResult(User);

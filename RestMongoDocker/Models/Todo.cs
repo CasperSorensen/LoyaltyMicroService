@@ -6,7 +6,6 @@ namespace RestMongoDocker.Models
 {
   public class Todo
   {
-
     [BsonId]
     public ObjectId InternalId { get; set; }
     public long Id { get; set; }
